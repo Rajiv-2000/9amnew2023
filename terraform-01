@@ -1,0 +1,150 @@
+
+INSTALLATION: 
+
+sudo yum install -y yum-utils shadow-utils
+sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+sudo yum -y install terraform
+
+
+CODE:
+
+provider "aws" {
+region = "ap-south-1"
+}
+
+resource "aws_instance" "one" {
+ami = "ami-0f8ca728008ff5af4"
+instance_type = "t2.micro"
+tags = {
+Name = "web-server"
+}
+}
+
+=========================================================================================================================================
+
+provider "aws" {
+region = "ap-south-1"
+}
+
+resource "aws_instance" "one" {
+ami = "ami-0f8ca728008ff5af4"
+instance_type = var.instance_type
+tags = {
+Name = "web-server"
+}
+}
+
+variable "instance_type" {
+description = "im uisng for my instance variable"
+type = string
+default = "t2.medium"
+}
+
+=========================================================================================================================================
+provider "aws" {
+region = "ap-south-1"
+}
+
+resource "aws_instance" "one" {
+count = 3
+ami = "ami-0f8ca728008ff5af4"
+instance_type = var.instance_type
+tags = {
+Name = "web-server"
+}
+}
+
+variable "instance_type" {
+description = "im uisng for my instance variable"
+type = string
+default = "t2.medium"
+}
+
+=========================================================================================================================================
+
+provider "aws" {
+region = "ap-south-1"
+}
+
+resource "aws_instance" "one" {
+count = var.instance_count
+ami = "ami-0f8ca728008ff5af4"
+instance_type = "t2.micro"
+tags = {
+Name = "web-server"
+}
+}
+
+variable "instance_count" {
+description = "*"
+type = number
+default = 2
+}
+
+=========================================================================================================================================
+
+provider "aws" {
+region = "us-east-1"
+}
+
+resource "aws_instance" "one" {
+ami = "ami-069aabeee6f53e7bf"
+instance_type = "t2.micro"
+tags = var.instance_tags
+}
+
+variable "instance_tags" {
+description = "im uisng for my instance variable"
+type = map(string)
+default = {
+Name = "app"
+Client = "swiggy"
+Env = "prod"
+}
+}
+
+
+=========================================================================================================================================
+
+  1  aws configure
+    2  ll
+    3  mkdir terraform
+    4  cd terraform/
+    5  vim main.tf
+    6  terraform init
+    7  sudo yum install -y yum-utils shadow-utils
+    8  sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+    9  sudo yum -y install terraform
+   10  terraform init
+   11  terraform plan
+   12  terraform apply
+   13  ll
+   14  cat terraform.tfstate
+   15  terraform destroy
+   16  cat terraform.tfstate
+   17  ll
+   18  vim main.tf
+   19  terraform apply -auto-approve
+   20  terraform destroy --auto-approve
+   21  vim main.tf
+   22  terraform plan
+   23  terraform apply --auto-approve
+   24  vim main.tf
+   25  terraform apply --auto-approve
+   26  vim main.tf
+   27  terraform apply --auto-approve
+   28  terraform destroy --auto-approve
+   29  vim main.tf
+   30  terraform apply --auto-approve
+   31  ll
+   32  terraform state list
+   33  terraform destroy --auto-approve -target=aws_instance.one[2]
+   34* terraform state lis
+   35  terraform destroy --auto-approve
+   36  vim main.tf
+   37  terraform apply --auto-approve
+   38  vim main.tf
+   39  terraform apply --auto-approve
+   40  cat main.tf
+   41  history
+
