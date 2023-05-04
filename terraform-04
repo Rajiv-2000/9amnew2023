@@ -1,0 +1,253 @@
+DYNAMIC BLOCK:
+
+provider "aws" {
+}
+
+locals {
+  ingress_rules = [{
+    port        = 443
+    description = "Ingress rules for port 443"
+    },
+    {
+      port        = 80
+      description = "Ingree rules for port 80"
+    },
+    {
+      port        = 8080
+      description = "Ingree rules for port 80"
+  }]
+}
+
+resource "aws_instance" "ec2_example" {
+  ami                    = "ami-03c7d01cf4dedc891"
+  instance_type          = "t2.micro"
+  vpc_security_group_ids = [aws_security_group.main.id]
+  tags = {
+    Name = "Terraform EC2"
+  }
+}
+
+resource "aws_security_group" "main" {
+
+  egress = [
+    {
+      cidr_blocks      = ["0.0.0.0/0"]
+      description      = "*"
+      from_port        = 0
+      ipv6_cidr_blocks = []
+      prefix_list_ids  = []
+      protocol         = "-1"
+      security_groups  = []
+      self             = false
+      to_port          = 0
+  }]
+
+  dynamic "ingress" {
+    for_each = local.ingress_rules
+
+    content {
+      description = "*"
+      from_port   = ingress.value.port
+      to_port     = ingress.value.port
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+  }
+
+  tags = {
+    Name = "terra sg"
+  }
+}
+
+====================================================================================================================================
+
+ALIAS & PROVIDERS :
+
+provider "aws" {
+  region = "us-east-1"
+}
+
+provider "aws" {
+alias = "south"
+region = "ap-south-1"
+}
+
+resource "aws_instance" "one" {
+ami = "ami-0b0dcb5067f052a63"
+instance_type = "t2.micro"
+tags = {
+Name = "nvirginia"
+}
+}
+
+resource "aws_instance" "two" {
+ami = "ami-0a2457eba250ca23d"
+instance_type = "t2.micro"
+provider = "aws.south"
+tags = {
+Name = "mumbai"
+}
+}
+
+
+=====================================================================================================================================================
+
+resource "aws_s3_bucket" "one" {
+bucket = "rahamterra55677"
+}
+
+resource "aws_ebs_volume" "example" {
+  availability_zone = "us-east-1a"
+  size              = 40
+
+  tags = {
+    Name = "HelloWorld"
+  }
+}
+
+resource "aws_db_instance" "default" {
+  allocated_storage    = 10
+  db_name              = "mydb"
+  engine               = "mysql"
+  engine_version       = "5.7"
+  instance_class       = "db.t3.micro"
+  username             = "foo"
+  password             = "Raham123#"
+  parameter_group_name = "default.mysql5.7"
+  skip_final_snapshot  = true
+}
+
+=========================================================================================================================================================================================
+
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = ">4.61.0, <4.65.0, !=4.64.0"
+    }
+  }
+}
+
+terraform {
+  required_providers {
+    local = {
+      source = "hashicorp/local"
+      version = "2.2.1"
+    }
+  }
+}
+
+=========================================================================================================================================================================================
+
+provider "github" {
+token = "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"
+}
+
+
+resource "github_repository" "example" {
+name = "rahamterrarepo"
+description = "hai all this repo is ny terraform"
+visibility = "public"
+auto_init = true
+}
+
+history:
+
+ 1  sudo yum install -y yum-utils shadow-utils
+    2  sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+    3  sudo yum -y install terraform
+    4  aws configure
+    5  mkdir terraform
+    6  cd terraform/
+    7  vim main.tf
+    8  terraform fmt
+    9  vim main.tf
+   10  terraform init
+   11  terraform plan
+   12  terraform apply --auto-approve
+   13  vim main.tf
+   14  terraform fmt
+   15  vim main.tf
+   16  terraform fmt
+   17  terraform apply --auto-approve
+   18  terraform destroy --auto-approve
+   19  cat main.tf
+   20  vim main.tf
+   21  terraform apply --auto-approve
+   22  vi main.tf
+   23  vim main.tf
+   24  terraform apply --auto-approve
+   25  vi  main.tf
+   26  terraform apply --auto-approve
+   27  vim main.tf
+   28  terraform apply --auto-approve
+   29  terraform state list
+   30  terraform destroy --auto-approve
+   31  vim main.tf
+   32  terraform apply --auto-approve
+   33  vi main.tf
+   34  terraform apply --auto-approve
+   35  vim main.tf
+   36  terraform apply --auto-approve
+   37  terraform state list
+   38  vim terraform.tfstate
+   39  vim main.tf
+   40* terraform  --auto-approve
+   41  ps
+   42  kill -9 28601
+   43  kill -9 32031
+   44  cat main.tf
+   45  vim main.tf
+   46  terraform init
+   47  cat main.tf
+   48  terraform apply --auto-approve
+   49  cat main.tf
+   50  ll
+   51  cd /root/
+   52  ll
+   53  cat abc.txt
+   54  cd terraform/
+   55  cat main.tf
+   56  cat terraform.tfstate
+   57  vim main.tf
+   58  cat main.tf
+   59  cat terraform.tfstate
+   60  ls /root/
+   61  terraform apply --auto-approve
+   62  ls /root/
+   63  cat terraform.tfstate
+   64  terraform init
+   65  vim main.tf
+   66  terraform init -upgrade
+   67  vim main.tf
+   68  terraform init -upgrade
+   69  vim main.tf
+   70  terraform init -upgrade
+   71  vim main.tf
+   72  terraform init -upgrade
+   73  vim main.tf
+   74  terraform init -upgrade
+   75  vim main.tf
+   76  terraform init -upgrade
+   77  cat main.tf
+   78  vim main.tf
+   79  terraform init -upgrade
+   80  cat main.tf
+   81  vim main.tf
+   82  terraform init -upgrade
+   83  terraform apply --auto-approve
+   84  vim m
+   85  vim main.tf
+   86  terraform apply --auto-approve
+   87  cat main.tf
+   88  vim main.tf
+   89  terraform apply --auto-approve
+   90  terraform init -upgrdae
+   91  terraform init -upgrade
+   92  terraform apply --auto-approve
+   93  vim main.tf
+   94  terraform apply --auto-approve
+   95  terraform destroy --auto-approve
+
+
+
